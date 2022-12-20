@@ -1,0 +1,22 @@
+  #include <stdio.h>
+
+  int getStarNum(int l, int N) {
+      if(l<=N) return (2*N-1)-2*(l-1);
+      else return getStarNum(2*N-l, N);
+  }
+
+int getSpaceNum(int l, int N) {
+    return (2*N-1) - getStarNum(l, N);
+  }
+
+
+
+  int main() {
+    int cnt;
+    scanf("%d", &cnt);
+    for(int i=1; i<=2*cnt-1; i++) {
+        for(int j=0; j<getSpaceNum(i, cnt)/2; j++) printf(" ");
+        for(int j=0; j<getStarNum(i, cnt); j++) printf("*");
+        printf("\n");
+    }
+  }
