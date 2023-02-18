@@ -1,26 +1,26 @@
+/**
+* 10953. A+B - 6
+*/
+
 #include <iostream>
-#include <string>
-#include <sstream>
+#include <iomanip>
 using namespace std;
 
+int T, A, B;
+
 int main() {
-	int num;
-	cin >> num;
-    
-	for(int i=0; i<num; i++) {
-	    string input;
-	    int result[2];
-	    
-		cin >> input;
-		istringstream iss(input);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-		string tmp;
-		int k = 0;
-		while(getline(iss, tmp, ',')) {
-			result[k] = stoi(tmp);
-			k++;
-		}		
+    cin >> T;
 
-		cout << result[0] + result[1] << endl;
-	}
+    while(T--) {
+        cin >> A;
+        cin.ignore();
+        cin >> B;
+        cout << A + B << "\n";
+    }
+
+    return 0;
 }
