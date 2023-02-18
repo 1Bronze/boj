@@ -1,13 +1,23 @@
-#include<iostream>
+/**
+* 10950. A+B - 3
+*/
+
+#include <iostream>
 using namespace std;
 
+int T, A, B;
+
 int main() {
-    int cnt;
-    cin >> cnt;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    cin >> T;
     
-    for(int i=0; i<cnt; i++) {
-        int a, b;
-        cin >> a >> b;
-        cout << a+b << endl;
+    while(T--) {
+        cin >> A >> B;
+        cout << A+B << "\n";
     }
+
+    return 0;
 }
