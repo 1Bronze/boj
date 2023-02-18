@@ -1,16 +1,22 @@
-#include <iostream>
+/**
+* 10952. A+B - 5
+*/
 
-using std::cout;
-using std::cin;
-using std::endl;
+#include <iostream>
+using namespace std;
+
+int T, A, B;
 
 int main() {
-    int a = 1, b = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    while (a != 0 && b != 0) {
-        cin >> a >> b;
-
-        if(a != 0 && b != 0)
-            cout << a + b << endl;
+    while(1) {
+        cin >> A >> B;
+        if (!A && !B) break;
+        cout << A + B << "\n";
     }
+
+    return 0;
 }
