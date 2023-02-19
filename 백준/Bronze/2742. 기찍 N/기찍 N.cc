@@ -1,10 +1,21 @@
+/**
+* 2742. 기찍 N
+*/
+
 #include <iostream>
 using namespace std;
 
+int N;
+
 int main() {
-	int n;
-	scanf("%d", &n);
-	for(n; n>0; n--) {
-		printf("%d\n", n);
-	}
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    cin >> N;
+    for (int i = N; i >= 1; i--) {
+        cout << i << "\n";
+    }
+
+    return 0;
 }
