@@ -1,14 +1,28 @@
-#include <stdio.h>
+/**
+ * 10818. 최소, 최대
+*/
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int N;
+int arr[1000000];
+int minimum=1000000, maximum=-1000000;
 
 int main() {
-	int n; int min = 1000000; int max = -1000000;
-	int arr[1000001];
-	scanf("%d", &n);
-	for(int i=1; i<=n; i++)
-		scanf("%d", &arr[i]);
-	for(int i=1; i<=n; i++) {
-		if(min>arr[i]) min=arr[i];
-		if(max<arr[i]) max=arr[i];
-	}
-	printf("%d %d", min, max);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        cin >> arr[i];
+        minimum = min(minimum, arr[i]);
+        maximum = max(maximum, arr[i]);
+    }
+
+    cout << minimum << " " << maximum;
+
+    return 0;
 }
