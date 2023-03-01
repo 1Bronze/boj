@@ -1,44 +1,63 @@
+/**
+ * 2108. 통계학
+ */
+
 #include <iostream>
 #include <algorithm>
-#include <vector>
 #include <cmath>
+#include <map>
 using namespace std;
-vector<int> arr;
+
+int N;
+map<int, int> m;
+double avg, mid, mode, range;
+
 int main() {
-    int num,tmp,range,middle = 0,most_val,mean = 0;
-    int most = -9999;
-    int number[8001] = {0,};
-    bool not_first = false;
-    cin >> num;
-    for(int i = 0; i < num; i++)
-    {
-        cin >> tmp;
-        arr.push_back(tmp);
-        mean += tmp;
-        number[tmp+4000]++;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        int tmp; cin >> tmp;
+        avg += tmp;
+
+        if(m.find(tmp)==m.end())
+            m.insert({tmp, 1});
+        else
+            m.at(tmp)++;
     }
-    sort(arr.begin(),arr.end());
-    for(int i = 0; i < 8001; i++)
-    {
-        if(number[i] == 0)
-            continue;
-        if(number[i] == most)
-        {
-            if(not_first)
-            {
-                most_val = i - 4000;
-                not_first = false;
-            }
+
+    int maximum = -987654321;
+    int minimum = 987654321;
+    pair<int, int> tmp = {0, 0};
+    int before_cnt = 0, after_cnt = 0; bool isSecond = false;
+    for (const auto i: m) {
+        after_cnt += i.second;
+        maximum = max(maximum, i.first);
+        minimum = min(minimum, i.first);
+        if(before_cnt < (N+1)/2 && after_cnt >= (N+1)/2) mid = i.first;
+        if(tmp.second<i.second) {
+            isSecond = false;
+            tmp.first = i.first;
+            tmp.second = i.second;
+        } else if(tmp.second==i.second && !isSecond) {
+            isSecond = true;
+            tmp.first = i.first;
+            tmp.second = i.second;
         }
-        if(number[i] > most)
-        {
-            most = number[i];
-            most_val = i - 4000;
-            not_first = true;
-        }
+        before_cnt = after_cnt;
     }
-    middle = arr[arr.size()/2];
-    mean = round((float)mean / num);
-    range = arr.back() - arr.front();
-    cout << mean << '\n' << middle << '\n' << most_val << '\n' << range;
+
+    range = maximum - minimum;
+    avg /= N;
+    avg = round(avg);
+    mode = tmp.first;
+
+    if(avg == -0) avg = 0;
+
+    cout << avg << "\n";
+    cout << mid << "\n";
+    cout << mode << "\n";
+    cout << range << "\n";
 }
