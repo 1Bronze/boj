@@ -1,19 +1,27 @@
-#include <cstdio>
-#include <algorithm>
+/**
+ * 11004. K번째 수
+ */
 
+#include <iostream>
+#include <algorithm>
+#include <vector>
 using namespace std;
 
-int N; int K;
-int arr[5000000];
+int N, K;
+vector<int> v;
 
 int main() {
-    scanf("%d %d", &N, &K);
-    for (int i = 0; i < N; i++)
-        scanf("%d", &arr[i]);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    sort(arr, arr + N);
+    cin >> N >> K;
+    for (int i = 1; i <= N; i++) {
+        int tmp; cin >> tmp;
+        v.push_back(tmp);
+    }
 
-    printf("%d\n", arr[K-1]);
+    sort(v.begin(), v.end());
 
-    return 0;
+    cout << v.at(K-1);
 }
