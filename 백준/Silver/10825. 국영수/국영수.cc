@@ -1,41 +1,49 @@
+/**
+ * 10825. 국영수
+ */
+
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 #include <string>
 using namespace std;
 
 struct Student {
     string name;
-    int kor, eng, math;
+    int korean, english, math;
 };
 
 int N;
 vector<Student> v;
 
-bool compare(const Student &a, const Student &b) {
-
-    if(a.kor != b.kor) // 국어 점수 비교
-        return a.kor > b.kor;
-    if(a.eng != b.eng) // 국어 점수가 같으면 영어 점수 비교
-        return a.eng < b.eng;
-    if(a.math != b.math) // 국어, 영어 점수가 같으면 수학 점수 비교
-        return a.math > b.math;
-    else // 국어, 영어, 수학 점수가 모두 같으면 사전순 배열
-        return a.name < b.name;
+bool compare(Student a, Student b) {
+    if(a.korean!=b.korean)
+        return (a.korean > b.korean);
+    else if(a.english != b.english)
+        return (a.english < b.english);
+    else if(a.math != b.math)
+        return (a.math > b.math);
+    else
+        return (a.name < b.name);
 }
 
 int main() {
-    Student s;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
     cin >> N;
     for (int i = 0; i < N; i++) {
-        cin >> s.name >> s.kor >> s.eng >> s.math;
-        v.push_back(s);
+        string name;
+        int korean, english, math;
+        cin >> name >> korean >> english >> math;
+        v.push_back({name, korean, english, math});
     }
 
-    stable_sort(v.begin(), v.end(), compare);
+    sort(v.begin(), v.end(), compare);
 
-    for (int i = 0; i < N; i++) cout << v[i].name << "\n";
+    for (const auto s: v)
+        cout << s.name << "\n";
 
     return 0;
 }
