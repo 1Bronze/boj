@@ -6,13 +6,13 @@
 using namespace std;
 
 int L;
-int ans;
+long long ans;
 int r = 31, M = 1234567891;
 
 int pow(const int& a, const int& b) {
     int result = 1;
     for (int i = 0; i < b; i++)
-        result = (result * a) % 1234567891;
+        result = (result * a) % M;
 
     return result;
 }
