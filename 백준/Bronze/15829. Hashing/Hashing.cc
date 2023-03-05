@@ -18,8 +18,7 @@ int pow(const int& a, const int& b) {
 }
 
 int hashing(const int& idx, const int& a) {
-
-    return (a*((long long)pow(r, idx))) % M;
+    return (a*pow(r, idx)) % M;
 }
 
 int main() {
@@ -33,6 +32,7 @@ int main() {
         ans += hashing(i, (int)target-96);
     }
 
+    ans %= M;
     cout << ans << "\n";
     return 0;
 }
