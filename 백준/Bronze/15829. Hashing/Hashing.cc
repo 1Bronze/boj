@@ -3,15 +3,23 @@
  */
 
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 int L;
-int result;
+int ans;
+int r = 31, M = 1234567891;
+
+int pow(const int& a, const int& b) {
+    int result = 1;
+    for (int i = 0; i < b; i++)
+        result = (result * a) % 1234567891;
+
+    return result;
+}
 
 int hashing(const int& idx, const int& a) {
-    int r = 31, M = 1234567891;
-    return (a*((int)pow(r, idx)))%M;
+
+    return (a*((long long)pow(r, idx))) % M;
 }
 
 int main() {
@@ -22,9 +30,9 @@ int main() {
     cin >> L;
     for (int i = 0; i < L; i++) {
         char target; cin >> target;
-        result += hashing(i, (int)target-96);
+        ans += hashing(i, (int)target-96);
     }
 
-    cout << result << "\n";
+    cout << ans << "\n";
     return 0;
 }
