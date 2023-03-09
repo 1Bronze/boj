@@ -1,40 +1,36 @@
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <stack>
-#include <algorithm>
+/**
+ * 9012. 괄호
+ */
 
+#include <iostream>
+#include <stack>
+#include <string>
 using namespace std;
 
-int T; string str;
+int T;
 stack<char> s;
+string str;
 
 int main() {
-    scanf("%d", &T);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    char target;
-    for (int i = 0; i < T; i++) {
+    cin >> T;
+    while(T--) {
         cin >> str;
 
-        // target: 제일 위에서 두번째에 위치한 원소
-        s.push(str[0]); target = str[0];
-        for(int j = 1; j < str.length(); j++) {
-            s.push(str[j]);
+        while(!s.empty()) s.pop();
 
-            if(target=='(' && s.top()==')') {
-                s.pop();
-                s.pop();
-            }
-
-            if(s.empty()) s.push(str[++j]);
-            target = s.top();
+        for (int i = 0; i < str.size(); i++) {
+           if(s.empty()) s.push(str[i]);
+            else {
+               if (s.top() == '(' && str[i] == ')') s.pop();
+               else s.push(str[i]);
+           }
         }
 
-        string result = (s.top()=='\0') ? "YES":"NO";
-        cout << result << "\n";
-
-        while( !s.empty() ) s.pop();
+        if(s.empty()) cout << "YES\n";
+        else cout << "NO\n";
     }
-
-    return 0;
 }
