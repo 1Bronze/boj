@@ -1,30 +1,39 @@
+/**
+ * 10799. 쇠막대기
+ */
+
 #include <iostream>
+#include <vector>
+#include <stack>
 #include <string>
 using namespace std;
 
-string s;
-int stick[100000];
-int result = 0;
+stack<char> s;
+vector<char> v;
+int result;
 
 int main() {
-    
-    stick[0] = 1;
-    cin >> s;
-    
-    for(int i=1; i<s.length(); i++) {
-        if(s[i]=='(') 
-            stick[i] = stick[i-1] + 1;
-        else
-            stick[i] = stick[i-1] - 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    string str; cin >> str;
+    str.push_back('(');
+
+    for (int i = 0; i < str.length(); i++) {
+
+        if(str[i]=='(' && str[i+1]==')') {
+            result += s.size();
+            i++;
+        } else if(str[i] == '(') {
+            s.push(str[i]);
+        } else {
+            result++;
+            s.pop();
+        }
     }
-    
-    for(int i=1; i<s.length(); i++) {
-        if(s[i-1]=='(' && s[i]==')')
-            result += stick[i];
-        else if(s[i]==')')
-            result += 1;
-    }
-    
-    cout << result;
+
+    cout << result << "\n";
     return 0;
+
 }
