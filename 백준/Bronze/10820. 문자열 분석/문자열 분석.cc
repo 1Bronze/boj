@@ -1,31 +1,33 @@
+/**
+ * 10820. 문자열 분석
+ */
+
 #include <iostream>
 #include <string>
 using namespace std;
 
-#define lower 0
-#define upper 1
-#define number 2
-#define space 3
-
-int num[4];
-string s;
+string str;
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     while(1) {
-        getline(cin, s);
+        getline(cin, str);
         if(cin.eof()) break;
 
-        for(int i=0; i<4; i++) num[i] = 0;
-
-        for(int i=0; i<s.length(); i++) {
-            if(int(s[i])==32) num[space]++;
-            else if(int(s[i])>=48 && int(s[i])<=57) num[number]++;
-            else if(int(s[i])>=65 && int(s[i])<=90) num[upper]++;
-            else if(int(s[i])>=97 && int(s[i])<=122) num[lower]++;
+        int space, upper, lower, number;
+        space = upper = lower = number = 0;
+        for (int i = 0; i < str.length(); i++) {
+            int t = (int)str[i];
+            if(t==32) space++;
+            else if(t>=65 && t<91) upper++;
+            else if(t>=97 && t<123) lower++;
+            else if(t>=48 && t<58) number++;
         }
 
-        for(int i=0; i<4; i++) cout << num[i] << " ";
-        cout << "\n";
+        cout << lower << " " << upper << " " << number << " " << space << "\n";
     }
 
     return 0;
