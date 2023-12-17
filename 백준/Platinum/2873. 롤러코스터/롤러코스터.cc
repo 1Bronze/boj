@@ -1,105 +1,103 @@
 #include <iostream>
-
+#include <vector>
+#include <utility>
+#include <string>
 using namespace std;
 
-int R, C;
-int arr[1002][1002];
-int minY = 1000, minX = 1000, minVal = 1000;
-
-int min(int a, int b) {
-    return (a < b) ? a : b;
-}
-
-void moveL(int &i, int &j) {
-    printf("L");
-    arr[i][j--] = 0;
-}
-
-void moveR(int &i, int &j) {
-    printf("R");
-    arr[i][j++] = 0;
-}
-
-void moveU(int &i, int &j) {
-    printf("U");
-    arr[i--][j] = 0;
-}
-
-void moveD(int &i, int &j) {
-    printf("D");
-    arr[i++][j] = 0;
-}
-
-void move() {
-    int targetY, targetX;
-
-    if (minY % 2 == 0) targetY = minY - 1;
-    else targetY = minY;
-
-    int i = 1, j = 1;
-    while (i != targetY) {
-        if(i%2==1 && j!=C) moveR(i, j);
-        else if(i%2==0 && j!=1) moveL(i, j);
-        else moveD(i, j);
-    }
-
-    targetX = minX;
-    while(j!=targetX) {
-        if(j%2==1) { moveD(i, j); moveR(i, j); }
-        else { moveU(i,j); moveR(i, j); }
-    }
-
-    while(j!=C) {
-        if(j%2==1) { moveR(i, j); moveD(i, j); }
-        else { moveR(i, j); moveU(i, j); }
-    }
-
-    if(i==R && j==C) return;
-    else moveD(i, j);
-
-    while(!(i==R && j==C)) {
-        if(i%2==1 && j!=1) moveL(i, j);
-        else if(i%2==0 && j!=C) moveR(i, j);
-        else moveD(i, j);
-    }
-}
-
 int main() {
+    int R, C;
     cin >> R >> C;
-
-    for (int i = 1; i <= R; i++) {
-        for (int j = 1; j <= C; j++) {
-            cin >> arr[i][j];
-        }
+    
+    int** pleasure = new int*[R]; // 2차원 배열 동적 할당
+    for (int i = 0; i < R; i++) {
+        pleasure[i] = new int[C];
     }
-
-    if (R % 2 == 1) {
-        int i = 1, j = 1;
-        while (i != R || j != C) {
-            if (arr[i][j + 1] != 0) moveR(i, j);
-            else if (arr[i][j - 1] != 0) moveL(i, j);
-            else moveD(i, j);
-        }
-    } else if (C % 2 == 1) {
-        int i = 1, j = 1;
-        while (i != R || j != C) {
-            if (arr[i + 1][j] != 0) moveD(i, j);
-            else if (arr[i - 1][j] != 0) moveU(i, j);
-            else moveR(i, j);
-        }
-    } else {
-        for (int i = 1; i <= R; i++) {
-            for (int j = 1; j <= C; j++) {
-                if ((i + j) % 2 == 1 && !(i == 1 && j == 1)) {
-                    if (minVal > arr[i][j]) {
-                        minVal = min(minVal, arr[i][j]);
-                        minY = i;
-                        minX = j;
-                    }
-                }
+    
+    pair<int, int> blank;
+    int min = 1001; // 1000 최대
+    // 배열 입력 및 가장 작은 값과 그 위치 찾기
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            cin >> pleasure[i][j];
+            if (min > pleasure[i][j] && (i + j) % 2 == 1) {
+                min = pleasure[i][j];
+                blank.first = i;
+                blank.second = j;
             }
         }
-        arr[minY][minX] = 0;
-        move();
     }
+    
+    string move;
+    int i, j;
+    if (R % 2 == 1) { // R이 홀수일 때
+        for (i = 0; i < R; i++) {
+            for (j = 0; j < C - 1; j++) {
+                if (i % 2 == 0)
+                    move += 'R'; // 오른쪽 방향
+                else
+                    move += 'L'; // 왼쪽 방향
+            }
+            if (i == R - 1)
+                break;
+            move += 'D'; // 아래쪽 방향
+        }
+    } else if (C % 2 == 1) { // C가 홀수일 때
+        for (i = 0; i < C; i++) {
+            for (j = 0; j < R - 1; j++) {
+                if (i % 2 == 0)
+                    move += 'D'; // 아래쪽 방향
+                else
+                    move += 'U'; // 위쪽 방향
+            }
+            if (i == C - 1)
+                break;
+            move += 'R'; // 오른쪽 방향
+        }
+    } else { // R, C 모두 짝수일 때
+        // 모두 짝수일 때는 모든 칸을 지나갈 수 없음. 무조건 한 칸은 지나가지 않음
+        int r, c;
+        if (blank.first % 2 == 1)
+            r = blank.first - 1; // blank가 있는 윗줄까지
+        else
+            r = blank.first; // blank가 있는 줄까지
+        
+        for (i = 0; i < r; i++) { // blank 전
+            for (j = 0; j < C - 1; j++) {
+                if (i % 2 == 0)
+                    move += 'R';
+                else
+                    move += 'L';
+            }
+            move += 'D';
+        }
+        
+        c = blank.second; // blank의 열
+        for (i = 0; i < c; i++) { // blank 전
+            if (i % 2 == 0)
+                move += "DR";
+            else
+                move += "UR";
+        }
+        
+        for (i = c; i < C - 1; i++) { // blank 후
+            if (i % 2 == 0)
+                move += "RD";
+            else
+                move += "RU";
+        }
+        
+        for (i = r + 2; i < R; i++) { // blank 아래
+            move += 'D';
+            for (j = 0; j < C - 1; j++) {
+                if (i % 2 == 0)
+                    move += 'L';
+                else
+                    move += 'R';
+            }
+        }
+    }
+    
+    cout << move << endl;
+    
+    return 0;
 }
